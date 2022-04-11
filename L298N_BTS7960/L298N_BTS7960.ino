@@ -16,7 +16,7 @@ void setup() {
   //初始設定
   pinMode(INA1, OUTPUT);
   pinMode(INA2, OUTPUT);
-//  digitalWrite(PWM, HIGH);
+  //  digitalWrite(PWM, HIGH);
 
   //設定正反轉
   digitalWrite(INA1, LOW);
@@ -33,24 +33,24 @@ void loop() {
     digitalWrite(INA1, LOW);
     digitalWrite(INA2, HIGH);
   }
-  else {
+  else if (recv == 2) {
     digitalWrite(INA1, HIGH);
     digitalWrite(INA2, LOW);
   }
 
   if (Serial.available() > 0) {
     // read the incoming byte:
-    
+
     Serial.readBytes(cmd, 10);
     //Serial.readBytes()返回放置在緩衝區中的字符數。0 表示未找到有效數據。
-    
+
     recv = atoi(cmd);
     //這邊沒有值的時候會一直收到0，所以上方recv == 0，要都設定成LOW，要不然會一直跑
-    
+
     Serial.println(atoi(recv));
     //atoi將字符串轉換爲整型值。
-    
-//    steptimes();
+
+    //    steptimes();
   }
 }
 
