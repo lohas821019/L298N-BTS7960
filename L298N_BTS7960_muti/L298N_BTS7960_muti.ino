@@ -30,8 +30,8 @@ void setup() {
   digitalWrite(INA1, LOW);
   digitalWrite(INA2, LOW);
 
-  pinMode(INA3, OUTPUT);
-  pinMode(INA4, OUTPUT);
+  digitalWrite(INA3, LOW);
+  digitalWrite(INA4, LOW);
 }
 
 void loop() {
@@ -47,15 +47,15 @@ void loop() {
     digitalWrite(INA1, LOW);
     digitalWrite(INA2, HIGH);
 
-    digitalWrite(INA3, LOW);
-    digitalWrite(INA4, HIGH);
+    digitalWrite(INA3, HIGH); //反向是因為輪子安裝的方向造成要反向
+    digitalWrite(INA4, LOW);
   }
   else if (recv == 2) {
-    digitalWrite(INA1, HIGH);
+    digitalWrite(INA1, HIGH); 
     digitalWrite(INA2, LOW);
     
-    digitalWrite(INA3, HIGH);
-    digitalWrite(INA4, LOW);
+    digitalWrite(INA3, LOW);
+    digitalWrite(INA4, HIGH);
   }
 
   if (Serial.available() > 0) {
