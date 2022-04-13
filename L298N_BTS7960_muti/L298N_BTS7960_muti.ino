@@ -1,12 +1,21 @@
 #include <Arduino.h>
 
-int PWM = 4;  //pulse/
-int INA1 = 5; // 方向
-int INA2 = 6; // 方向
+int PWM0 = 3; //pulse/
+int INA1 = 4; // 方向
+int INA2 = 2; // 方向
 
-int PWM1 = 8;  //pulse/
-int INA3 = 9; // 方向
-int INA4 = 10; // 方向
+int PWM1 = 5; //pulse/
+int INA3 = 6; // 方向
+int INA4 = 7; // 方向
+
+int PWM2 = 11; //pulse/
+int INA5 = 12; // 方向
+int INA6 = 13; // 方向
+
+int PWM3 = 10; //pulse/
+int INA7 = 9;  // 方向
+int INA8 = 8;  // 方向
+
 
 char cmd[10];
 int recv;
@@ -24,7 +33,23 @@ void setup() {
 
   pinMode(INA3, OUTPUT);
   pinMode(INA4, OUTPUT);
-  //  digitalWrite(PWM, HIGH);
+
+  pinMode(INA5, OUTPUT);
+  pinMode(INA6, OUTPUT);
+
+  pinMode(INA7, OUTPUT);
+  pinMode(INA8, OUTPUT);
+
+  pinMode(PWM0, OUTPUT);
+  pinMode(PWM1, OUTPUT);
+  pinMode(PWM2, OUTPUT);
+  pinMode(PWM3, OUTPUT);
+
+  digitalWrite(PWM0, LOW);
+  digitalWrite(PWM1, LOW);
+  digitalWrite(PWM2, LOW);
+  digitalWrite(PWM3, LOW);
+
 
   //設定正反轉
   digitalWrite(INA1, LOW);
@@ -32,31 +57,114 @@ void setup() {
 
   digitalWrite(INA3, LOW);
   digitalWrite(INA4, LOW);
+
+  digitalWrite(INA5, LOW);
+  digitalWrite(INA6, LOW);
+
+  digitalWrite(INA7, LOW);
+  digitalWrite(INA8, LOW);
+
 }
 
 void loop() {
 
+  //靜止
   if (recv == 0) {
     digitalWrite(INA1, LOW);
     digitalWrite(INA2, LOW);
 
     digitalWrite(INA3, LOW);
     digitalWrite(INA4, LOW);
+
+    digitalWrite(INA5, LOW);
+    digitalWrite(INA6, LOW);
+
+    digitalWrite(INA7, LOW);
+    digitalWrite(INA8, LOW);
   }
+
+  //往前
   else if (recv == 1) {
+
+    analogWrite(PWM0, 127);
+    analogWrite(PWM1, 127);
+    analogWrite(PWM2, 127);
+    analogWrite(PWM3, 127);
+
     digitalWrite(INA1, LOW);
     digitalWrite(INA2, HIGH);
 
-    digitalWrite(INA3, HIGH); //反向是因為輪子安裝的方向造成要反向
-    digitalWrite(INA4, LOW);
-  }
-  else if (recv == 2) {
-    digitalWrite(INA1, HIGH); 
-    digitalWrite(INA2, LOW);
-    
     digitalWrite(INA3, LOW);
     digitalWrite(INA4, HIGH);
+
+    digitalWrite(INA5, HIGH);
+    digitalWrite(INA6, LOW);
+
+    digitalWrite(INA7, HIGH);
+    digitalWrite(INA8, LOW);
+
   }
+  //往後
+  else if (recv == 2) {
+    analogWrite(PWM0, 127);
+    analogWrite(PWM1, 127);
+    analogWrite(PWM2, 127);
+    analogWrite(PWM3, 127);
+
+    digitalWrite(INA1, HIGH);
+    digitalWrite(INA2, LOW);
+
+    digitalWrite(INA3, HIGH);
+    digitalWrite(INA4, LOW);
+
+    digitalWrite(INA5, LOW);
+    digitalWrite(INA6, HIGH);
+
+    digitalWrite(INA7, LOW);
+    digitalWrite(INA8, HIGH);
+  }
+
+  //向前往左
+  else if (recv == 3) {
+
+    analogWrite(PWM0, 127);
+    analogWrite(PWM1, 127);
+    analogWrite(PWM2, 64);
+    analogWrite(PWM3, 64);
+
+    digitalWrite(INA1, LOW);
+    digitalWrite(INA2, HIGH);
+
+    digitalWrite(INA3, LOW);
+    digitalWrite(INA4, HIGH);
+
+    digitalWrite(INA5, HIGH);
+    digitalWrite(INA6, LOW);
+
+    digitalWrite(INA7, HIGH);
+    digitalWrite(INA8, LOW);
+  }
+
+  //向前往右
+  else if (recv == 4) {
+
+    analogWrite(PWM0, 64);
+    analogWrite(PWM1, 64);
+    analogWrite(PWM2, 127);
+    analogWrite(PWM3, 127);
+
+    digitalWrite(INA1, LOW);
+    digitalWrite(INA2, HIGH);
+
+    digitalWrite(INA3, LOW);
+    digitalWrite(INA4, HIGH);
+
+    digitalWrite(INA5, HIGH);
+    digitalWrite(INA6, LOW);
+
+    digitalWrite(INA7, HIGH);
+    digitalWrite(INA8, LOW);
+  };
 
   if (Serial.available() > 0) {
     // read the incoming byte:
@@ -67,7 +175,7 @@ void loop() {
     recv = atoi(cmd);
     //這邊沒有值的時候會一直收到0，所以上方recv == 0，要都設定成LOW，要不然會一直跑
 
-    Serial.println(atoi(recv));
+    Serial.println(recv);
     //atoi將字符串轉換爲整型值。
 
   }
