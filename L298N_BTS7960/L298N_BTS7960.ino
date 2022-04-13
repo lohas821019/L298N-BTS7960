@@ -1,8 +1,13 @@
 #include <Arduino.h>
 
-int PWM = 4;  //pulse/
-int INA1 = 5; // 方向
-int INA2 = 6; // 方向
+//int PWM = 5;  //pulse/
+//int INA1 = 6; // 方向
+//int INA2 = 7; // 方向
+
+int PWM = 9;  //pulse/
+int INA1 = 10; // 方向
+int INA2 = 11; // 方向
+
 char cmd[10];
 int recv;
 
@@ -37,6 +42,17 @@ void loop() {
     digitalWrite(INA1, HIGH);
     digitalWrite(INA2, LOW);
   }
+  else if (recv == 3) {
+    digitalWrite(INA1, HIGH);
+    digitalWrite(INA2, HIGH);
+  }
+  else if (recv == 4) {
+    digitalWrite(INA1, HIGH);
+    digitalWrite(INA2, LOW);
+    analogWrite(PWM, 64);
+    //    digitalWrite(INA2, HIGH);
+  };
+
 
   if (Serial.available() > 0) {
     // read the incoming byte:
@@ -47,7 +63,7 @@ void loop() {
     recv = atoi(cmd);
     //這邊沒有值的時候會一直收到0，所以上方recv == 0，要都設定成LOW，要不然會一直跑
 
-    Serial.println(atoi(recv));
+    Serial.println(recv);
     //atoi將字符串轉換爲整型值。
 
     //    steptimes();
