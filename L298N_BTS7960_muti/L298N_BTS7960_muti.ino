@@ -40,16 +40,10 @@ void setup() {
   pinMode(INA7, OUTPUT);
   pinMode(INA8, OUTPUT);
 
-  pinMode(PWM0, OUTPUT);
-  pinMode(PWM1, OUTPUT);
-  pinMode(PWM2, OUTPUT);
-  pinMode(PWM3, OUTPUT);
-
-  digitalWrite(PWM0, LOW);
-  digitalWrite(PWM1, LOW);
-  digitalWrite(PWM2, LOW);
-  digitalWrite(PWM3, LOW);
-
+  analogWrite(PWM0, 0);
+  analogWrite(PWM1, 0);
+  analogWrite(PWM2, 0);
+  analogWrite(PWM3, 0);
 
   //設定正反轉
   digitalWrite(INA1, LOW);
@@ -70,6 +64,11 @@ void loop() {
 
   //靜止
   if (recv == 0) {
+    analogWrite(PWM0, 0);
+    analogWrite(PWM1, 0);
+    analogWrite(PWM2, 0);
+    analogWrite(PWM3, 0);
+
     digitalWrite(INA1, LOW);
     digitalWrite(INA2, LOW);
 
