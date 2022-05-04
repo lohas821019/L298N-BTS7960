@@ -10,90 +10,40 @@ import time
 
 #右側輪胎
 COM_PORT1 = 'COM1'
-COM_PORT2 = 'COM2'
-
-#左側輪胎
-COM_PORT3 = 'COM3'
-COM_PORT4 = 'COM4'
 
 baudRate = 9600
 ser1 = serial.Serial(COM_PORT1, baudRate, timeout=0.5)
-ser2 = serial.Serial(COM_PORT2, baudRate, timeout=0.5)
-ser3 = serial.Serial(COM_PORT3, baudRate, timeout=0.5)
-ser4 = serial.Serial(COM_PORT4, baudRate, timeout=0.5)
 
 try:
     while True:
         # 接收用戶的輸入值並轉成小寫
-        choice = input('2/4/6/8 --> 2後退 /4往左 /6往右 /8前進 /q 離開')
+        choice = input('0/1/2/3/4 --> 0停止 /1往前 /2往後 /3向前往左 /4向前往右 /q 離開')
 
         if choice == 'q':
             ser1.write(0)
-            ser2.write(0)
-            ser3.write(0)
-            ser4.write(0)
             time.sleep(0.5)
             break
 
         elif (choice.isnumeric()): 
-            if int(choice) == 2:
-                 backward()
+            if int(choice) == 0:
+                ser1.write(0)
 
+            elif int(choice) == 1:
+                ser1.write(1)
+                
+            elif int(choice) == 2:
+                ser1.write(2)
+                
+            elif int(choice) == 3:
+                ser1.write(3)
+                
             elif int(choice) == 4:
-                 left()
+                ser1.write(4)
 
-            elif int(choice) == 6:
-                 right()
-
-            elif int(choice) == 8:
-                 forward()
-            
             else :
-                print('請重新輸入!! 2/4/6/8 --> 2後退 /4往左 /6往右 /8前進 /q 離開')
+                print('0/1/2/3/4 --> 0停止 /1往前 /2往後 /3向前往左 /4向前往右 /q 離開')
                 pass
 
 finally:
     ser1.close()
-    ser2.close()
-    ser3.close()
-    ser4.close()
     print('各串口已關閉')
-
-
-#0為靜止，1為正轉，2為反轉
-def right():
-    ser1.write(0)
-    ser2.write(0)
-    ser3.write(1)
-    ser4.write(1)
-    time.sleep(0.5)
-    
-    return True
-
-def left():
-    ser1.write(1)
-    ser2.write(1)
-    ser3.write(0)
-    ser4.write(0)
-    time.sleep(0.5)
-
-    return True
-
-def forward():
-    ser1.write(1)
-    ser2.write(1)
-    ser3.write(1)
-    ser4.write(1)
-    time.sleep(0.5)
-
-    return True
-
-
-def backward():
-    ser1.write(2)
-    ser2.write(2)
-    ser3.write(2)
-    ser4.write(2)
-    time.sleep(0.5)
-
-    return True
