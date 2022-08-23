@@ -8,6 +8,8 @@ int PWM3 = 10; //pulse/
 int INA7 = 9;  // 方向
 int INA8 = 8;  // 方向
 
+int pin13 = 13;
+
 
 char cmd[10];
 int recv;
@@ -32,6 +34,7 @@ void setup() {
   analogWrite(PWM1, 0);
   analogWrite(PWM3, 0);
 
+  pinMode(pin13, OUTPUT);
 
   //設定正反轉
   digitalWrite(INA3, LOW);
@@ -60,20 +63,19 @@ void loop() {
   //往前
   else if (recv == 1) {
 
-    analogWrite(PWM1, 127);
-    analogWrite(PWM3, 127);
+    analogWrite(PWM1, 80);
+    analogWrite(PWM3, 80);
 
     digitalWrite(INA3, LOW);
     digitalWrite(INA4, HIGH);
 
     digitalWrite(INA7, HIGH);
     digitalWrite(INA8, LOW);
-
   }
   //往後
   else if (recv == 2) {
-    analogWrite(PWM1, 127);
-    analogWrite(PWM3, 127);
+    analogWrite(PWM1, 80);
+    analogWrite(PWM3, 80);
 
     digitalWrite(INA3, HIGH);
     digitalWrite(INA4, LOW);
@@ -105,8 +107,16 @@ void loop() {
 
     digitalWrite(INA7, HIGH);
     digitalWrite(INA8, LOW);
-  };
+  }
 
+  else if (recv == 5) {
+    digitalWrite(pin13, LOW);
+  }
+
+  else if (recv == 6) {
+    digitalWrite(pin13, HIGH);
+  };
+  
   if (Serial.available() > 0) {
     // read the incoming byte:
 
